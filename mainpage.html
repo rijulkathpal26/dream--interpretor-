@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dream Whisperer | Interpret Your Dreams</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/minireset.css/0.0.2/minireset.min.css">
+    <style>
+        :root {
+            --primary: #6c63ff;
+            --secondary: #3f3d56;
+            --accent: #f50057;
+            --background: #f9f9f9;
+            --text: #333;
+            --light-text: #777;
+            --card: #fff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--background);
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--card);
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-icon {
+            margin-right: 8px;
+            font-size: 1.8rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            bottom: -5px;
+            left: 0;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--secondary);
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 60px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background-color: rgba(108, 99, 255, 0.1);
+            top: -100px;
+            left: -100px;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background-color: rgba(245, 0, 87, 0.1);
+            bottom: -50px;
+            right: -50px;
+        }
+
+        .hero-content {
+            max-width: 600px;
+            animation: fadeIn 1s ease;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--light-text);
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(108, 99, 255, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            margin-left: 1rem;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: var(--light-text);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+        }
+
+        .feature-card {
+            background-color: var(--card);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            flex: 1 1 300px;
+            max-width: 350px;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+
+        .feature-card p {
+            color: var(--light-text);
+        }
+
+        /* Dream Interpreter Section */
+        .interpreter {
+            padding: 5rem 0;
+            background-color: var(--background);
+        }
+
+        .interpreter-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .interpreter-form {
+            flex: 1 1 500px;
+            background-color: var(--card);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 2rem;
+        }
+
+        .interpreter-info {
+            flex: 1 1 400px;
+        }
+
+        .interpreter-info h2 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .interpreter-info p {
+            color: var(--light-text);
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--secondary);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1);
+        }
+
+        /* Interpretation Result */
+        .interpretation-result {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border-radius: 8px;
+            background-color: #f0f8ff;
+            border: 1px solid #d1e0fe;
+            display: none;
+        }
+
+        .interpretation-result.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .interpretation-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 5rem 0;
+            background-color: #f2f5fa;
+        }
+
+        .testimonials-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+        }
+
+        .testimonial-card {
+            background-color: var(--card);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            flex: 1 1 300px;
+            max-width: 350px;
+            position: relative;
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            font-size: 4rem;
+            font-family: Georgia, serif;
+            color: rgba(108, 99, 255, 0.1);
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            color: var(--light-text);
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .testimonial-author-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 1rem;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .testimonial-author-info h4 {
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .testimonial-author-info p {
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+
+        .footer-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+
+        .footer-col {
+            flex: 1 1 200px;
+        }
+
+        .footer-col h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 30px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        .footer-col ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-col ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-col ul li a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .footer-col p {
+            color: #ccc;
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background-color: var(--card);
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: var(--shadow);
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .feature-card {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo"><span class="logo-icon">✨</span> Dream Whisperer</a>
+                <div class="nav-links" id="navLinks">
+                    <a href="#" class="active">Home</a>
+                    <a href="#interpreter">Interpret</a>
+                    <a href="#features">Features</a>
+                    <a href="#testimonials">Testimonials</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Unlock the Secrets of Your Dreams</h1>
+                <p>Discover the hidden meanings and messages in your dreams with our advanced dream interpretation tool. Gain insights into your subconscious mind and understand your innermost thoughts and feelings.</p>
+                <div class="hero-btns">
+                    <a href="#interpreter" class="btn">Interpret Your Dream</a>
+                    <a href="#features" class="btn btn-secondary">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why Choose Dream Whisperer?</h2>
+                <p>Our platform offers unique features to help you understand the deeper meaning behind your dreams.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Detailed Analysis</h3>
+                    <p>Get comprehensive interpretations of your dreams based on universal symbols and psychological patterns.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Pattern Recognition</h3>
+                    <p>Identify recurring themes and symbols in your dreams to uncover deeper patterns in your subconscious.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3>Psychological Insights</h3>
+                    <p>Understand how your dreams connect to your waking life, emotions, and psychological state.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dream Interpreter Section -->
+    <section class="interpreter" id="interpreter">
+        <div class="container">
+            <div class="interpreter-container">
+                <div class="interpreter-info">
+                    <h2>Interpret Your Dreams</h2>
+                    <p>Share your dream in detail, and our interpreter will analyze the symbols and themes to provide you with meaningful insights.</p>
+                    <p>For the most accurate interpretation, include as many details as you can remember, such as people, places, objects, colors, emotions, and actions.</p>
+                </div>
+                <div class="interpreter-form">
+                    <form id="dreamForm">
+                        <div class="form-group">
+                            <label for="dreamTitle">Dream Title</label>
+                            <input type="text" id="dreamTitle" placeholder="Give your dream a title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="dreamCategory">Dream Category</label>
+                            <select id="dreamCategory" required>
+                                <option value="">-- Select a category --</option>
+                                <option value="flying">Flying</option>
+                                <option value="falling">Falling</option>
+                                <option value="chase">Being Chased</option>
+                                <option value="test">Taking a Test</option>
+                                <option value="water">Water or Ocean</option>
+                                <option value="death">Death or Dying</option>
+                                <option value="teeth">Teeth Falling Out</option>
+                                
+                                <option value="house">Houses or Buildings</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="dreamEmotions">Emotions Felt</label>
+                            <input type="text" id="dreamEmotions" placeholder="e.g., fear, joy, confusion, excitement">
+                        </div>
+                        <button type="submit" class="btn">Interpret Dream</button>
+                    </form>
+                    
+                    <div class="interpretation-result" id="interpretationResult">
+                        <div class="interpretation-title">Dream Interpretation</div>
+                        <div id="interpretationText"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>What Our Users Say</h2>
+                <p>Hear from people who have gained insights from our dream interpretation tool.</p>
+            </div>
+            <div class="testimonials-container">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">I've been recording my dreams for years, but Dream Whisperer helped me see patterns I never noticed before. It's like having a personal dream analyst!</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-author-img">SM</div>
+                        <div class="testimonial-author-info">
+                            <h4>Sameer Kumar</h4>
+                            <p>Dream Enthusiast</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">I was skeptical at first, but the interpretations were surprisingly accurate. They helped me understand some recurring dreams that had been troubling me for months.</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-author-img">JD</div>
+                        <div class="testimonial-author-info">
+                            <h4>Rakesh Yadav</h4>
+                            <p>Psychology Student</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">The interface is beautiful and easy to use. I love how I can track patterns in my dreams over time and get insights that actually feel meaningful.</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-author-img">AL</div>
+                        <div class="testimonial-author-info">
+                            <h4>Aarti Singh</h4>
+                            <p>Yoga Instructor</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col">
+                    <h3>Dream Whisperer</h3>
+                    <p>Unlock the secrets of your dreams and gain insights into your subconscious mind with our advanced dream interpretation tool.</p>
+                    
+                </div>
+                <div class="footer-col">
+                    <h3>About Me</h3>
+                    <p>I'm Rijul Kathpal, a curious web developer always eager to learn and explore new technologies. This project represents my passion for combining psychology with interactive web experiences.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="https://www.dreamdictionary.org">Dream Dictionary</a></li>
+                        <li><a href="https://www.vogue.com/article/dream-interpretations">Common Dream Symbols</a></li>
+                        <li><a href="https://thecreativeindependent.com/guides/how-to-start-and-keep-a-dream-journal/">Dream Journal Tips</a></li>
+                        <li><a href="https://www.brescia.edu/2016/09/psychology-of-dreams/">Dream Psychology</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact Me</h3>
+                    <ul>
+                        <li><a href="mailto:rijulkathpal@gmail.com">rijulkathpal@gmail.com</a></li>
+                        <li><a href="tel:+917717564709">+91 7717564709</a></li>
+                        
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Dream Whisperer. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+            });
+        }
+        
+        // Dream Interpretation Logic
+        const dreamForm = document.getElementById('dreamForm');
+        const interpretationResult = document.getElementById('interpretationResult');
+        const interpretationText = document.getElementById('interpretationText');
+    
+        dreamForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const dreamCategory = document.getElementById('dreamCategory').value;
+            const dreamEmotions = document.getElementById('dreamEmotions').value.toLowerCase();
+            
+            if (!dreamCategory) {
+                alert('Please select a dream category.');
+                return;
+            }
+            
+            const interpretations = {
+                flying: "Flying often symbolizes freedom, ambition, or a desire to rise above challenges.",
+                falling: "Falling in dreams suggests insecurity, anxiety, or a loss of control in life situations.",
+                chase: "Being chased may indicate avoidance of a real-life problem, person, or responsibility.",
+                test: "Dreams about tests symbolize self-evaluation, fear of failure, or performance anxiety.",
+                water: "Water often represents emotions—calm water signifies peace, while rough water reflects turmoil.",
+                death: "Dreams of death rarely mean actual death; they symbolize transformation, endings, or new beginnings.",
+                teeth: "Teeth falling out in dreams often indicate anxiety about self-image, communication, or personal power.",
+                house: "A house in dreams represents the self. Different rooms can symbolize aspects of personality or memories."
+            };
+            
+            let interpretation = interpretations[dreamCategory] || "Your dream is unique and requires personal reflection.";
+            
+            if (dreamEmotions.includes("fear")) {
+                interpretation += " The presence of fear suggests underlying anxieties or insecurities related to this dream.";
+            } else if (dreamEmotions.includes("joy")) {
+                interpretation += " Feeling joy in the dream indicates positive transformation, excitement, or newfound clarity.";
+            } else if (dreamEmotions.includes("confusion")) {
+                interpretation += " Confusion in your dream suggests uncertainty in your waking life, possibly about an important decision.";
+            }
+            if (dreamEmotions.includes("sadness")) {
+                interpretation += " Experiencing sadness in a dream often reflects unresolved grief, disappointment, or emotional loss.";
+            } else if (dreamEmotions.includes("anger")) {
+                interpretation += " Anger in dreams can indicate frustration, repressed emotions, or unresolved conflicts in your waking life.";
+            } else if (dreamEmotions.includes("love")) {
+                interpretation += " Feeling love in a dream suggests emotional fulfillment, deep connections, or a desire for intimacy.";
+            } else if (dreamEmotions.includes("excitement")) {
+                interpretation += " Excitement in a dream may signify anticipation for future events, personal growth, or positive changes ahead.";
+            } else if (dreamEmotions.includes("guilt")) {
+                interpretation += " Guilt in dreams often represents regret, moral dilemmas, or feelings of responsibility for past actions.";
+            } else if (dreamEmotions.includes("loneliness")) {
+                interpretation += " Loneliness in dreams may indicate isolation, a need for social connection, or emotional emptiness in real life.";
+            } else if (dreamEmotions.includes("hope")) {
+                interpretation += " A sense of hope in a dream signifies optimism, personal aspirations, and confidence in overcoming obstacles.";
+            } else if (dreamEmotions.includes("jealousy")) {
+                interpretation += " Jealousy in dreams may symbolize insecurity, comparisons to others, or fears of inadequacy.";
+            } else if (dreamEmotions.includes("relief")) {
+                interpretation += " Feeling relief in a dream suggests that you have resolved an internal conflict or are overcoming stress.";
+            } else if (dreamEmotions.includes("shame")) {
+                interpretation += " Shame in a dream often reflects self-judgment, fear of embarrassment, or unresolved guilt from past actions.";
+            }
+            if (dreamEmotions.includes("betrayal")) {
+                interpretation += " Feeling betrayed in a dream may indicate trust issues, fear of deception, or unresolved conflicts with someone close.";
+            } else if (dreamEmotions.includes("confidence")) {
+                interpretation += " Confidence in a dream suggests self-assurance, personal growth, or readiness to take on new challenges.";
+            } else if (dreamEmotions.includes("powerlessness")) {
+                interpretation += " A sense of powerlessness in a dream may reflect feeling stuck, overwhelmed, or lacking control in your waking life.";
+            } else if (dreamEmotions.includes("curiosity")) {
+                interpretation += " Curiosity in a dream can signify a desire to learn, explore new opportunities, or seek deeper understanding of yourself.";
+            } else if (dreamEmotions.includes("resentment")) {
+                interpretation += " Resentment in a dream may indicate lingering grudges, suppressed emotions, or a need for closure in a past situation.";
+            } else if (dreamEmotions.includes("embarrassment")) {
+                interpretation += " Experiencing embarrassment in a dream could symbolize fear of judgment, insecurity, or self-consciousness about a situation.";
+            } else if (dreamEmotions.includes("gratitude")) {
+                interpretation += " Feeling gratitude in a dream represents appreciation for life, emotional healing, or a positive mindset towards personal experiences.";
+            } else if (dreamEmotions.includes("helplessness")) {
+                interpretation += " Helplessness in dreams may indicate feelings of being overwhelmed, trapped, or unable to influence an important outcome.";
+            } else if (dreamEmotions.includes("envy")) {
+                interpretation += " Envy in a dream may point to self-comparison, desires for what others have, or dissatisfaction with your current situation.";
+            } else if (dreamEmotions.includes("serenity")) {
+                interpretation += " A sense of serenity in a dream suggests inner peace, acceptance, and a balanced emotional state in your waking life.";
+            }
+            if (dreamEmotions.includes("abandonment")) {
+                interpretation += " Dreaming of abandonment may reflect fears of rejection, loneliness, or unresolved childhood issues.";
+            } else if (dreamEmotions.includes("acceptance")) {
+                interpretation += " Feeling acceptance in a dream suggests inner peace, self-approval, or the resolution of a past issue.";
+            } else if (dreamEmotions.includes("admiration")) {
+                interpretation += " Admiring someone in a dream can indicate aspirations, inspiration, or feelings of respect toward that person.";
+            } else if (dreamEmotions.includes("agitation")) {
+                interpretation += " Agitation in dreams often represents stress, restlessness, or unresolved conflicts in waking life.";
+            } else if (dreamEmotions.includes("alienation")) {
+                interpretation += " Feeling alienated in a dream may signify disconnection from others or a struggle with self-identity.";
+            } else if (dreamEmotions.includes("amazement")) {
+                interpretation += " A sense of amazement in a dream suggests newfound inspiration, insight, or unexpected opportunities ahead.";
+            } else if (dreamEmotions.includes("anxiety")) {
+                interpretation += " Anxiety in dreams typically reflects worries, uncertainties, or unresolved stressors in daily life.";
+            } else if (dreamEmotions.includes("apathy")) {
+                interpretation += " Feeling apathetic in a dream could symbolize emotional exhaustion, disinterest, or a sense of detachment.";
+            } else if (dreamEmotions.includes("awe")) {
+                interpretation += " Experiencing awe in a dream suggests admiration, spiritual awakening, or being overwhelmed by powerful emotions.";
+            } else if (dreamEmotions.includes("bitterness")) {
+                interpretation += " Bitterness in a dream may reveal lingering resentment, unresolved grudges, or a need to let go of past hurts.";
+            } else if (dreamEmotions.includes("boldness")) {
+                interpretation += " Feeling bold in a dream signifies newfound courage, confidence, or readiness to face challenges head-on.";
+            } else if (dreamEmotions.includes("boredom")) {
+                interpretation += " Boredom in a dream may indicate dissatisfaction, monotony, or a subconscious desire for change.";
+            } else if (dreamEmotions.includes("bravery")) {
+                interpretation += " Bravery in a dream represents overcoming fears, self-empowerment, or stepping into your full potential.";
+            } else if (dreamEmotions.includes("calmness")) {
+                interpretation += " A sense of calmness in a dream suggests inner peace, acceptance, and emotional balance.";
+            } else if (dreamEmotions.includes("cautiousness")) {
+                interpretation += " Feeling cautious in a dream may indicate hesitation, uncertainty, or an instinct to avoid potential dangers.";
+            } else if (dreamEmotions.includes("claustrophobia")) {
+                interpretation += " Dreaming of claustrophobia may reflect feeling trapped, constrained, or overwhelmed in a real-life situation.";
+            } else if (dreamEmotions.includes("compassion")) {
+                interpretation += " Feeling compassionate in a dream suggests emotional maturity, kindness, and a strong connection to others.";
+            } else if (dreamEmotions.includes("contentment")) {
+                interpretation += " Contentment in dreams signifies satisfaction, emotional security, and a balanced life.";
+            } else if (dreamEmotions.includes("courage")) {
+                interpretation += " Displaying courage in a dream suggests inner strength, confidence, and a willingness to take on new challenges.";
+            } else if (dreamEmotions.includes("cruelty")) {
+                interpretation += " Experiencing cruelty in a dream may symbolize hidden aggression, repressed anger, or fear of injustice.";
+            } else if (dreamEmotions.includes("danger")) {
+                interpretation += " A sense of danger in a dream suggests subconscious fears, heightened awareness, or unresolved anxieties.";
+            } else if (dreamEmotions.includes("defeat")) {
+                interpretation += " Feeling defeated in a dream may indicate self-doubt, failure fears, or struggles with motivation.";
+            } else if (dreamEmotions.includes("delight")) {
+                interpretation += " Experiencing delight in a dream signifies happiness, fulfillment, and emotional well-being.";
+            } else if (dreamEmotions.includes("denial")) {
+                interpretation += " Denial in a dream could symbolize avoidance, refusal to accept reality, or fear of the truth.";
+            } else if (dreamEmotions.includes("dependence")) {
+                interpretation += " Feeling dependent in a dream may indicate reliance on others, insecurity, or lack of self-sufficiency.";
+            } else if (dreamEmotions.includes("desperation")) {
+                interpretation += " Desperation in dreams suggests urgent concerns, inner turmoil, or a feeling of helplessness.";
+            } else if (dreamEmotions.includes("disbelief")) {
+                interpretation += " Feeling disbelief in a dream may indicate shock, denial, or difficulty accepting a situation in real life.";
+            } else if (dreamEmotions.includes("discomfort")) {
+                interpretation += " Discomfort in dreams may reflect unresolved stress, social anxiety, or inner conflict.";
+            } else if (dreamEmotions.includes("disgust")) {
+                interpretation += " Experiencing disgust in a dream suggests moral conflicts, personal boundaries, or suppressed emotions.";
+            } else if (dreamEmotions.includes("distrust")) {
+                interpretation += " Distrust in a dream may indicate skepticism, betrayal, or wariness of someone's true intentions.";
+            } else if (dreamEmotions.includes("dominance")) {
+                interpretation += " Feeling dominant in a dream represents assertiveness, control, or leadership qualities in waking life.";
+            } else if (dreamEmotions.includes("doubt")) {
+                interpretation += " Doubt in a dream symbolizes uncertainty, indecision, or lack of confidence in your abilities.";
+            } else if (dreamEmotions.includes("eagerness")) {
+                interpretation += " A sense of eagerness in a dream suggests anticipation, enthusiasm, or excitement about future possibilities.";
+            } else if (dreamEmotions.includes("emptiness")) {
+                interpretation += " Feeling empty in a dream may indicate emotional voids, loss, or unresolved grief.";
+            } else if (dreamEmotions.includes("encouragement")) {
+                interpretation += " Experiencing encouragement in a dream signifies motivation, positive reinforcement, and self-belief.";
+            } else if (dreamEmotions.includes("entrapment")) {
+                interpretation += " A sense of entrapment in a dream suggests feeling stuck, restricted, or lacking freedom in real life.";
+            } else if (dreamEmotions.includes("euphoria")) {
+                interpretation += " Feeling euphoric in a dream signifies extreme happiness, accomplishment, or a deep spiritual connection.";
+            } else if (dreamEmotions.includes("exhaustion")) {
+                interpretation += " Exhaustion in a dream may indicate burnout, overwork, or emotional depletion.";
+            } else if (dreamEmotions.includes("frustration")) {
+                interpretation += " Frustration in dreams reflects obstacles, delays, or feelings of powerlessness.";
+            } else if (dreamEmotions.includes("gloominess")) {
+                interpretation += " Feeling gloomy in a dream may indicate sadness, hopelessness, or lack of motivation.";
+            } else if (dreamEmotions.includes("grief")) {
+                interpretation += " Grief in dreams often signifies loss, longing, or unresolved emotional pain.";
+            } else if (dreamEmotions.includes("happiness")) {
+                interpretation += " Feeling happiness in a dream suggests contentment, emotional security, and personal fulfillment.";
+            } else if (dreamEmotions.includes("humiliation")) {
+                interpretation += " Experiencing humiliation in a dream reflects self-consciousness, embarrassment, or fear of judgment.";
+            } else if (dreamEmotions.includes("indifference")) {
+                interpretation += " Indifference in a dream may indicate emotional numbness, avoidance, or disinterest.";
+            } else if (dreamEmotions.includes("isolation")) {
+                interpretation += " Feeling isolated in a dream suggests loneliness, alienation, or difficulty connecting with others.";
+            } else if (dreamEmotions.includes("melancholy")) {
+                interpretation += " Melancholy in a dream may reflect nostalgia, sorrow, or deep introspection.";
+            } 
+            
+            interpretationText.innerHTML = `<strong>Interpretation:</strong> ${interpretation}`;
+            interpretationResult.classList.add('active');
+        });
+    </script>
+    
